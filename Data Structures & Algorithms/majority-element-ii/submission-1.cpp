@@ -1,0 +1,50 @@
+class Solution {
+public:
+    vector<int> majorityElement(vector<int>& nums) {
+        // think like this : what is the maximum possible number of majority element
+        int candidate1 = 0;
+        int candidate2 = 0;
+        int count1 = 0;
+        int count2 = 0;
+        for(auto num:nums){
+            if(num == candidate1){
+                count1++;
+            }else if(num == candidate2){
+                count2++;
+            }else if(count1 == 0){
+                candidate1 = num;
+                count1++;
+            }else if(count2 == 0){
+                candidate2 = num;
+                count2++;
+            }else{
+                if(count1 < count2){
+                    candidate1 = num;
+                    count1 = 1;
+                }else{
+                    candidate2 = num;
+                    count2 = 0;
+                }
+            }
+        }
+        // verify condition check
+        count1 = 0;
+        count2 = 0;
+        for(auto num:nums){
+            if(num == candidate1){
+                count1++;
+            }
+            if(num == candidate2){
+                count2++;
+            }
+        }
+        vector<int> ans;
+        if(count1 > nums.size()/3){
+            ans.push_back(candidate1);
+        }
+        if(count2 > nums.size()/3){
+            ans.push_back(candidate2);
+        }
+        return ans;
+    }
+};
